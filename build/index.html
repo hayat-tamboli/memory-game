@@ -6,8 +6,14 @@
       name="description"
       content="a simple memory game in which you match pairs of cards"
     />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#eeeeee"/>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="msapplication-starturl" content="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/app.css" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png"><!--to do-->
     <link
       rel="shortcut icon"
       href="./assets/question mark.png"
@@ -77,5 +83,14 @@
       </button>
     </div>
     <script src="./js/app.js"></script>
+    <script>
+      // Check that service workers are supported
+      if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/sw.js");
+        });
+      }
+    </script>
   </body>
 </html>

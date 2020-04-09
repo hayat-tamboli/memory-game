@@ -1,0 +1,11 @@
+{
+  "name": "memory_game",
+  "version": "1.0.0",
+  "description": "a simple memory game",
+  "main": "index.js",
+  "scripts": {
+    "serve": "http-server -p 1330 build -c-1"
+  },
+  "author": "Hayat Tamboli",
+  "license": "MIT"
+}
