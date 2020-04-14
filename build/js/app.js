@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
   
-  //cardArray.sort(() => 0.5 - Math.random()); //to randomly put the cards
+  cardArray.sort(() => 0.5 - Math.random()); //to randomly put the cards
   let stopVar=0;
   const grid = document.querySelector(".grid");
   const headline = document.querySelector("#headline");
