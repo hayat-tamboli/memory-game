@@ -1,36 +1,27 @@
+/*let level = document.getElementById("level_number").getAttribute('value');
+function submit(){
+  alert('your level is ' + level);
+}*/
 const information = document.querySelector(".information");
 let openClose = 0;
 const info = async () => {
-  if(openClose%2==0)
-  information.classList.replace("closed", "open");
-  else
-  information.classList.replace("open", "closed");
+  if (openClose % 2 == 0) information.classList.replace("closed", "open");
+  else information.classList.replace("open", "closed");
 
   openClose++;
 };
-function refresh() {
+async function refresh() {
   history.go(0);
 }
 let x;
 let startstop = 0;
-
-//function startStop() {
-  /* Toggle StartStop */
-  /*if (startstop === 0) {
-    start();
-    document.getElementById("start").innerHTML = "Restart";
-    startstop++;
-  }
-}*/
-
-function start() {
+async function start() {
   if (startstop === 0) {
     x = setInterval(timer, 1000);
     document.getElementById("start").innerHTML = "Restart";
     startstop++;
   }
 } /* Start */
-
 function stop() {
   clearInterval(x);
 } /* Stop */
@@ -47,7 +38,7 @@ let minOut = 0;
 
 function timer() {
   /* Main Timer */
-  
+
   sec++;
   secOut = checkTime(sec);
   minOut = checkTime(min);
@@ -55,10 +46,9 @@ function timer() {
     min = ++min;
     sec = 0;
   }
-
+  
   document.getElementById("sec").innerHTML = secOut;
   document.getElementById("min").innerHTML = minOut;
-
 }
 
 /* Adds 0 when value is <10 */
@@ -72,7 +62,7 @@ function checkTime(i) {
 document.addEventListener("DOMContentLoaded", () => {
   //timer
   //CARD
-  const cardArray = [
+  let cardArray = [
     {
       name: "cat",
       img: "./assets/cat.png",
@@ -106,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
       img: "./assets/watermelon.png",
     },
     {
-      name: "buggs bunny",
-      img: "./assets/buggs bunny.png",
+      name: "sword",
+      img: "./assets/sword.png",
     },
     {
       name: "sword",
@@ -118,12 +108,13 @@ document.addEventListener("DOMContentLoaded", () => {
       img: "./assets/buggs bunny.png",
     },
     {
-      name: "sword",
-      img: "./assets/sword.png",
+      name: "buggs bunny",
+      img: "./assets/buggs bunny.png",
     },
   ];
-
-  cardArray.sort(() => 0.5 - Math.random()); //to randomly put the cards
+  
+  //cardArray.sort(() => 0.5 - Math.random()); //to randomly put the cards
+  let stopVar=0;
   const grid = document.querySelector(".grid");
   const headline = document.querySelector("#headline");
   const resultDisplay = document.querySelector("#result");
@@ -137,8 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
       let card = document.createElement("img");
       card.setAttribute("src", "./assets/question%20mark.png");
       card.setAttribute("data-id", index);
+      card.setAttribute("alt",`image${index}`);
+      card.addEventListener("click", start);
+      
       card.addEventListener("click", flipCard);
-      card.addEventListener('click',start);
       grid.appendChild(card);
     }
   }
@@ -149,9 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const optionTwoId = cardsChoosenID[1];
     if (cardsChoosen[0] === cardsChoosen[1]) {
       headline.textContent = "😄 you found a match +10";
-      cards[optionOneId].setAttribute("src", "./assets/blank.png");
-      cards[optionTwoId].setAttribute("src", "./assets/blank.png");
-      cardsWon.push(cardsChoosen);
+        cards[optionOneId].setAttribute("src", "./assets/blank.png");
+        cards[optionTwoId].setAttribute("src", "./assets/blank.png");
+        cardsWon.push(cardsChoosen);
     } else {
       cards[optionOneId].setAttribute("src", "./assets/question mark.png");
       cards[optionTwoId].setAttribute("src", "./assets/question mark.png");
@@ -160,23 +153,30 @@ document.addEventListener("DOMContentLoaded", () => {
     //for claering the cardsChoosen array
     cardsChoosen = [];
     cardsChoosenID = [];
-    resultDisplay.textContent = (cardsWon.length * 10) - sec - (min*60);
+    resultDisplay.textContent = cardsWon.length * 10 - sec - min * 60;
     if (cardsWon.length === cardArray.length / 2) {
-      headline.textContent = "congrats you won!!!";
+      headline.textContent = "😄congrats you won!🔥🔥🔥";
       stop();
+      stopVar++;
     }
   }
   //flip the cards
-  
+
   function flipCard() {
-    let cardID = this.getAttribute("data-id");
-    cardsChoosen.push(cardArray[cardID].name);
-    cardsChoosenID.push(cardID);
-    this.setAttribute("src", cardArray[cardID].img);
-    if (cardsChoosen.length === 2) {
-      setTimeout(checkForMatch, 350);
+    if(stopVar==0)
+    {
+      //console.log(cardsChoosen);
+      let cardID = this.getAttribute("data-id");
+      cardsChoosen.push(cardArray[cardID].name);
+      cardsChoosenID.push(cardID);
+      this.setAttribute("src", cardArray[cardID].img);
+      if (cardsChoosen.length === 2) {
+        setTimeout(checkForMatch, 400);
+      }
     }
   }
+
   //main event
+
   createBoard();
 });
